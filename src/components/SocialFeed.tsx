@@ -1,0 +1,79 @@
+"use client";
+
+import { motion } from "framer-motion";
+
+const FacebookIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+  </svg>
+);
+
+const InstagramIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+  </svg>
+);
+
+const SOCIAL_POSTS = [
+  "https://images.unsplash.com/photo-1516257984-b1b4d707412e?q=80&w=1587&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1617137968427-85924c800a22?q=80&w=2574&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1550639525-c97d455acf70?q=80&w=1626&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1618886487325-f66f76e5ba8a?q=80&w=1664&auto=format&fit=crop"
+];
+
+export default function SocialFeed() {
+  return (
+    <section className="py-24 bg-[var(--soft-beige)]">
+      <div className="container mx-auto px-6 md:px-12 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-12"
+        >
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
+            @ZenviaFashion
+          </h2>
+          <p className="text-[var(--warm-gray)] mb-6">
+            Chia sẻ khoảnh khắc của bạn cùng Zenvia với hashtag #ZenviaMen
+          </p>
+          <div className="flex justify-center gap-4">
+            <a href="https://www.facebook.com/profile.php?id=61582139553384" target="_blank" rel="noreferrer" className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow text-blue-600">
+              <FacebookIcon />
+            </a>
+            <a href="#" className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow text-pink-600">
+              <InstagramIcon />
+            </a>
+          </div>
+        </motion.div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {SOCIAL_POSTS.map((img, index) => (
+            <motion.a
+              href="https://www.facebook.com/profile.php?id=61582139553384"
+              target="_blank"
+              rel="noreferrer"
+              key={index}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: index * 0.1 }}
+              className="relative aspect-square overflow-hidden group block"
+            >
+              <img 
+                src={img} 
+                alt={`Social ${index + 1}`} 
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+              />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <div className="text-white"><FacebookIcon /></div>
+              </div>
+            </motion.a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
