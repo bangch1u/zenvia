@@ -1,0 +1,4 @@
+;/*FB_PKG_DELIM*/
+
+__d("CometGenAILabelGating",["qex"],(function(t,n,r,o,a,i,l){"use strict";function e(){var e;return(e=r("qex")._("2410"))!=null?e:!1}function s(){var e;return(e=r("qex")._("2928"))!=null?e:!1}l.isCometGenAILabelCreationEnabled=e,l.isCometGenAILabelConsumptionEnabled=s}),98);
+__d("TaggedContinuousScreenTimeUseCase",[],(function(t,n,r,o,a,i){"use strict";var e="scroll_break";i.SCROLL_BREAK=e}),66);

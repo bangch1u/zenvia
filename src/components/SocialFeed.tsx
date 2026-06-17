@@ -1,6 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
 const FacebookIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -17,60 +20,70 @@ const InstagramIcon = () => (
 );
 
 const SOCIAL_POSTS = [
-  "https://images.unsplash.com/photo-1516257984-b1b4d707412e?q=80&w=1587&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1617137968427-85924c800a22?q=80&w=2574&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1550639525-c97d455acf70?q=80&w=1626&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1618886487325-f66f76e5ba8a?q=80&w=1664&auto=format&fit=crop"
+  "/images/701119791_122132301291071318_1447634558021064937_n.jpg",
+  "/images/701312344_122132301309071318_3108915432690931716_n.jpg",
+  "/images/702044034_122132301213071318_6700617365759711061_n.jpg",
+  "/images/704811689_122132798709071318_6948687205746393980_n.jpg"
 ];
 
 export default function SocialFeed() {
+  const container = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.fromTo(".social-header",
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: container.current, start: "top 80%" } }
+    );
+
+    gsap.fromTo(".social-post",
+      { opacity: 0, scale: 0.9 },
+      { 
+        opacity: 1, scale: 1, duration: 0.8, stagger: 0.1, ease: "power2.out", 
+        scrollTrigger: { trigger: ".social-grid", start: "top 85%" }
+      }
+    );
+  }, { scope: container });
+
   return (
-    <section className="py-24 bg-[var(--soft-beige)]">
+    <section ref={container} className="py-24 md:py-32 bg-[var(--soft-beige)]">
       <div className="container mx-auto px-6 md:px-12 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-12"
-        >
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
+        <div className="social-header mb-16">
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6">
             @ZenviaFashion
           </h2>
-          <p className="text-[var(--warm-gray)] mb-6">
-            Chia sẻ khoảnh khắc của bạn cùng Zenvia với hashtag #ZenviaMen
+          <p className="text-[var(--warm-gray)] text-lg md:text-xl font-light mb-8">
+            Chia sẻ khoảnh khắc của bạn cùng Zenvia với hashtag <span className="font-semibold text-black">#ZenviaMen</span>
           </p>
-          <div className="flex justify-center gap-4">
-            <a href="https://www.facebook.com/profile.php?id=61582139553384" target="_blank" rel="noreferrer" className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow text-blue-600">
+          <div className="flex justify-center gap-6">
+            <a href="https://www.facebook.com/profile.php?id=61582139553384" target="_blank" rel="noreferrer" className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-blue-600">
               <FacebookIcon />
             </a>
-            <a href="#" className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow text-pink-600">
+            <a href="#" className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-pink-600">
               <InstagramIcon />
             </a>
           </div>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="social-grid grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {SOCIAL_POSTS.map((img, index) => (
-            <motion.a
+            <a
               href="https://www.facebook.com/profile.php?id=61582139553384"
               target="_blank"
               rel="noreferrer"
               key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: index * 0.1 }}
-              className="relative aspect-square overflow-hidden group block"
+              className="social-post relative aspect-square overflow-hidden group block rounded-sm"
             >
               <img 
                 src={img} 
                 alt={`Social ${index + 1}`} 
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 object-top" 
               />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <div className="text-white"><FacebookIcon /></div>
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm">
+                <div className="text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300"><FacebookIcon /></div>
               </div>
-            </motion.a>
+            </a>
           ))}
         </div>
       </div>

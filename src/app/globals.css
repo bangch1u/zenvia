@@ -2,14 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #FFFFFF;
-  --foreground: #0A0A0A;
-  --deep-black: #0A0A0A;
-  --charcoal-gray: #1A1A1A;
-  --warm-gray: #6E6E73;
-  --luxury-gold: #C8A86B;
-  --soft-beige: #F5F1EB;
+@layer base {
+  :root {
+    --background: #FFFFFF;
+    --foreground: #000000;
+    --deep-black: #050505;
+    --charcoal-gray: #121212;
+    --warm-gray: #888888;
+    --luxury-gold: #D4AF37;
+    --soft-beige: #F9F9F6;
+    --premium-glass: rgba(255, 255, 255, 0.05);
+  }
+
+  .dark {
+    --background: #0A0A0A;
+    --foreground: #FFFFFF;
+  }
 }
 
 body {
@@ -18,6 +26,30 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glassmorphism utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Hide scrollbar */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Lenis Smooth Scroll */
@@ -29,4 +61,12 @@ html.lenis, html.lenis body {
 }
 .lenis.lenis-stopped {
   overflow: hidden;
+}
+
+/* Custom Text Gradient */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #E6C875 0%, #B38728 50%, #FBF5B7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }

@@ -1,82 +1,84 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
 const STORE_IMAGES = [
-  "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=1770&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?q=80&w=1770&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1603510842018-874d122e1bce?q=80&w=1587&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1555529771-835f59fc5efe?q=80&w=1587&auto=format&fit=crop"
+  "/images/722097268_122135143917071318_6291259292882745499_n.jpg",
+  "/images/702811915_122132798871071318_2673783017356587821_n.jpg",
+  "/images/602414297_122114049873071318_863400411738336251_n.jpg",
+  "/images/721667306_122135143857071318_6992953767449721561_n.jpg"
 ];
 
 export default function StoreExperience() {
+  const container = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.fromTo(".store-header",
+      { opacity: 0, x: -30 },
+      { opacity: 1, x: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: container.current, start: "top 80%" } }
+    );
+    
+    gsap.fromTo(".store-link",
+      { opacity: 0, x: 30 },
+      { opacity: 1, x: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: container.current, start: "top 80%" } }
+    );
+
+    const images = gsap.utils.toArray(".store-image");
+    images.forEach((img: any, i) => {
+      gsap.fromTo(img,
+        { opacity: 0, scale: 0.9, y: 50 },
+        { 
+          opacity: 1, scale: 1, y: 0, 
+          duration: 1, 
+          delay: i * 0.1, 
+          ease: "power2.out", 
+          scrollTrigger: { trigger: ".store-grid", start: "top 85%" }
+        }
+      );
+    });
+  }, { scope: container });
+
   return (
-    <section className="py-24 bg-white">
+    <section ref={container} className="py-24 md:py-32 bg-white">
       <div className="container mx-auto px-6 md:px-12">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16">
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="max-w-xl"
-          >
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+          <div className="store-header max-w-2xl">
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-6">
               Không Gian Mua Sắm
             </h2>
-            <p className="text-[var(--warm-gray)]">
+            <p className="text-[var(--warm-gray)] text-lg md:text-xl font-light leading-relaxed">
               Trải nghiệm mua sắm đẳng cấp với không gian được thiết kế tối giản, tinh tế, nơi bạn có thể trực tiếp cảm nhận chất lượng của từng sản phẩm.
             </p>
-          </motion.div>
-          <motion.a 
+          </div>
+          <a 
             href="#" 
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="hidden md:inline-block text-sm font-semibold uppercase tracking-widest border-b border-black pb-1 hover:text-[var(--warm-gray)] hover:border-[var(--warm-gray)] transition-all"
+            className="store-link hidden md:inline-flex items-center text-sm font-semibold uppercase tracking-widest border-b-2 border-black pb-1 hover:text-[var(--luxury-gold)] hover:border-[var(--luxury-gold)] transition-all duration-300"
           >
             Hệ thống cửa hàng
-          </motion.a>
+          </a>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="grid gap-4">
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="h-[300px] md:h-[400px] rounded-lg overflow-hidden group"
-            >
-              <img src={STORE_IMAGES[0]} alt="Store 1" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-            </motion.div>
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="h-[200px] md:h-[300px] rounded-lg overflow-hidden group"
-            >
-              <img src={STORE_IMAGES[1]} alt="Store 2" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-            </motion.div>
+        <div className="store-grid grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid gap-6">
+            <div className="store-image h-[350px] md:h-[450px] rounded-sm overflow-hidden group">
+              <img src={STORE_IMAGES[0]} alt="Store 1" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 object-center" />
+            </div>
+            <div className="store-image h-[250px] md:h-[350px] rounded-sm overflow-hidden group">
+              <img src={STORE_IMAGES[1]} alt="Store 2" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 object-center" />
+            </div>
           </div>
-          <div className="grid gap-4">
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="h-[200px] md:h-[300px] rounded-lg overflow-hidden group"
-            >
-              <img src={STORE_IMAGES[2]} alt="Store 3" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-            </motion.div>
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="h-[300px] md:h-[400px] rounded-lg overflow-hidden group"
-            >
-              <img src={STORE_IMAGES[3]} alt="Store 4" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-            </motion.div>
+          <div className="grid gap-6">
+            <div className="store-image h-[250px] md:h-[350px] rounded-sm overflow-hidden group">
+              <img src={STORE_IMAGES[2]} alt="Store 3" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 object-center" />
+            </div>
+            <div className="store-image h-[350px] md:h-[450px] rounded-sm overflow-hidden group">
+              <img src={STORE_IMAGES[3]} alt="Store 4" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 object-center" />
+            </div>
           </div>
         </div>
       </div>
