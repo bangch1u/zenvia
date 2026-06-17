@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -10,7 +11,7 @@ const CTA_IMAGE = "/images/703587398_122132798739071318_857475403502014921_n.jpg
 
 export default function CTABanner() {
   const container = useRef<HTMLElement>(null);
-  const bgRef = useRef<HTMLImageElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -47,14 +48,17 @@ export default function CTABanner() {
   return (
     <section ref={container} className="relative py-32 md:py-48 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0 bg-black/60 z-10 mix-blend-multiply" />
-        <img 
-          ref={bgRef}
-          src={CTA_IMAGE} 
-          alt="CTA Background" 
-          className="w-full h-[140%] object-cover object-top -top-[20%] absolute"
-        />
+        <div ref={bgRef} className="absolute w-full h-[140%] -top-[20%] left-0">
+          <Image 
+            src={CTA_IMAGE} 
+            alt="CTA Background" 
+            fill
+            sizes="100vw"
+            className="object-cover object-top"
+          />
+        </div>
       </div>
 
       <div className="container relative z-20 mx-auto px-6 md:px-12 text-center text-white">

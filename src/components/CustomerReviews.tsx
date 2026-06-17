@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -83,8 +84,8 @@ export default function CustomerReviews() {
                 </p>
               </div>
               <div className="flex items-center gap-5 border-t border-gray-100 pt-6">
-                <div className="w-14 h-14 rounded-full overflow-hidden bg-gray-200">
-                  <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
+                <div className="w-14 h-14 rounded-full overflow-hidden bg-gray-200 relative">
+                  <Image src={review.avatar} alt={review.name} fill sizes="56px" className="object-cover" />
                 </div>
                 <div>
                   <h4 className="font-bold text-black text-lg">{review.name}</h4>

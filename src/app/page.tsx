@@ -1,13 +1,15 @@
+import dynamic from "next/dynamic";
 import Hero from "@/components/Hero";
-import BrandIntro from "@/components/BrandIntro";
-import FeaturedCollection from "@/components/FeaturedCollection";
-import WhyChooseZenvia from "@/components/WhyChooseZenvia";
-import Lookbook from "@/components/Lookbook";
-import BestSeller from "@/components/BestSeller";
-import CustomerReviews from "@/components/CustomerReviews";
-import StoreExperience from "@/components/StoreExperience";
-import SocialFeed from "@/components/SocialFeed";
-import CTABanner from "@/components/CTABanner";
+
+const BrandIntro = dynamic(() => import("@/components/BrandIntro"));
+const FeaturedCollection = dynamic(() => import("@/components/FeaturedCollection"));
+const WhyChooseZenvia = dynamic(() => import("@/components/WhyChooseZenvia"));
+const Lookbook = dynamic(() => import("@/components/Lookbook"));
+const BestSeller = dynamic(() => import("@/components/BestSeller"));
+const CustomerReviews = dynamic(() => import("@/components/CustomerReviews"));
+const StoreExperience = dynamic(() => import("@/components/StoreExperience"));
+const SocialFeed = dynamic(() => import("@/components/SocialFeed"));
+const CTABanner = dynamic(() => import("@/components/CTABanner"));
 
 export default function Home() {
   return (

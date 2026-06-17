@@ -1,8 +1,10 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import SplitType from "split-type";
 import { useGSAP } from "@gsap/react";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
@@ -23,22 +25,47 @@ export default function Hero() {
     // Background zoom out entrance
     tl.fromTo(".hero-bg", 
       { scale: 1.2, filter: "brightness(0.2)" }, 
-      { scale: 1, filter: "brightness(0.8)", duration: 2.5, ease: "power3.out" }
+      { scale: 1, filter: "brightness(0.8)", duration: 2.5, ease: "power3.out", force3D: true }
     );
     
-    // Staggered text entrance
-    tl.fromTo(".hero-text-item", 
-      { opacity: 0, y: 40 },
-      { opacity: 1, y: 0, duration: 1.2, stagger: 0.15, ease: "power3.out" },
-      "-=1.5"
-    );
+    // Initialize SplitType
+    let splitTitle: any = null;
+    let splitDesc: any = null;
     
-    // Buttons fade in
-    tl.fromTo(".hero-btn", 
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: "power2.out" },
-      "-=1.0"
-    );
+    // Slight delay to ensure DOM is ready
+    setTimeout(() => {
+      splitTitle = new SplitType(".hero-title", { types: "words,chars" });
+      splitDesc = new SplitType(".hero-desc", { types: "lines" });
+      
+      // Reveal subtitle first
+      tl.fromTo(".hero-subtitle",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 1, ease: "power3.out", force3D: true },
+        "-=2"
+      );
+      
+      // Staggered text entrance
+      if (splitTitle.chars) {
+        tl.from(splitTitle.chars, 
+          { opacity: 0, y: 50, duration: 1, stagger: 0.05, ease: "power4.out", force3D: true },
+          "-=1.5"
+        );
+      }
+      
+      if (splitDesc.lines) {
+        tl.from(splitDesc.lines,
+          { opacity: 0, y: 20, duration: 1, stagger: 0.1, ease: "power3.out", force3D: true },
+          "-=0.8"
+        );
+      }
+      
+      // Buttons fade in
+      tl.fromTo(".hero-btn", 
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: "power2.out", force3D: true },
+        "-=0.5"
+      );
+    }, 100);
     
     // Scroll indicator animation
     gsap.to(".scroll-indicator", {
@@ -82,6 +109,10 @@ export default function Hero() {
       }
     });
 
+    return () => {
+      if (splitTitle) splitTitle.revert();
+      if (splitDesc) splitDesc.revert();
+    };
   }, { scope: container });
 
   useGSAP(() => {
@@ -121,10 +152,13 @@ export default function Hero() {
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/90 z-10 mix-blend-multiply" />
         <div className="hero-bg-parallax w-full h-[120%] -top-[10%] absolute">
-          <img
+          <Image
             src={HERO_MODEL_IMAGE}
             alt="Zenvia Fashion Hero"
-            className="hero-bg w-full h-full object-cover object-[center_30%]"
+            fill
+            priority
+            sizes="100vw"
+            className="hero-bg object-cover object-[center_30%]"
           />
         </div>
       </div>
@@ -136,13 +170,13 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-20 h-full flex flex-col justify-end pb-32 md:justify-center md:pb-0 items-center text-center px-6 pt-20">
         <div className="max-w-5xl w-full flex flex-col items-center">
-          <span className="hero-text-item text-[var(--luxury-gold)] drop-shadow-md uppercase tracking-[0.3em] md:tracking-[0.4em] text-xs md:text-base font-semibold mb-4 md:mb-6 block">
+          <span className="hero-subtitle will-change-transform text-[var(--luxury-gold)] drop-shadow-md uppercase tracking-[0.3em] md:tracking-[0.4em] text-xs md:text-base font-semibold mb-4 md:mb-6 block opacity-0">
             Khám Phá Phong Cách Mới
           </span>
-          <h1 className="hero-text-item text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-4 md:mb-6 tracking-tighter leading-[1.1] drop-shadow-2xl">
+          <h1 className="hero-title will-change-transform text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-4 md:mb-6 tracking-tighter leading-[1.1] drop-shadow-2xl clip-text">
             SỰ HOÀN MỸ <br/> <span className="font-light italic text-white/90">TRONG TỪNG SỢI VẢI</span>
           </h1>
-          <p className="hero-text-item hidden md:block text-lg md:text-2xl text-white/80 font-light mb-12 max-w-2xl mx-auto tracking-wide">
+          <p className="hero-desc will-change-transform hidden md:block text-lg md:text-2xl text-white/80 font-light mb-12 max-w-2xl mx-auto tracking-wide clip-text">
             Thiết kế đương đại kết hợp nghệ thuật thủ công tinh xảo, tạo nên chuẩn mực mới cho quý ông hiện đại.
           </p>
           

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -103,10 +104,12 @@ export default function BrandIntro() {
           <div className="w-full lg:w-1/2">
             <div className="relative aspect-[3/4] overflow-hidden rounded-none shadow-2xl">
               <div className="absolute inset-0 bg-black/10 z-10" />
-              <img
+              <Image
                 src={BRAND_IMAGE}
                 alt="Zenvia Lifestyle"
-                className="brand-image w-full h-full object-cover origin-center"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="brand-image object-cover origin-center"
               />
               
               {/* Decorative element */}

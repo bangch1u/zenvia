@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -91,10 +92,12 @@ export default function FeaturedCollection() {
           {PRODUCTS.map((product) => (
             <div key={product.id} className="product-card group cursor-pointer">
               <div className="relative aspect-[3/4] overflow-hidden mb-6 bg-gray-100">
-                <img 
+                <Image 
                   src={product.image} 
                   alt={product.name} 
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  className="object-cover transition-transform duration-1000 group-hover:scale-110"
                 />
                 
                 {/* Hover overlay */}

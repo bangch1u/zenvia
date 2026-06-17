@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -65,19 +66,19 @@ export default function StoreExperience() {
 
         <div className="store-grid grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="grid gap-6">
-            <div className="store-image h-[350px] md:h-[450px] rounded-sm overflow-hidden group">
-              <img src={STORE_IMAGES[0]} alt="Store 1" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 object-center" />
+            <div className="store-image h-[350px] md:h-[450px] rounded-sm overflow-hidden group relative">
+              <Image src={STORE_IMAGES[0]} alt="Store 1" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-1000 group-hover:scale-105 object-center" />
             </div>
-            <div className="store-image h-[250px] md:h-[350px] rounded-sm overflow-hidden group">
-              <img src={STORE_IMAGES[1]} alt="Store 2" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 object-center" />
+            <div className="store-image h-[250px] md:h-[350px] rounded-sm overflow-hidden group relative">
+              <Image src={STORE_IMAGES[1]} alt="Store 2" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-1000 group-hover:scale-105 object-center" />
             </div>
           </div>
           <div className="grid gap-6">
-            <div className="store-image h-[250px] md:h-[350px] rounded-sm overflow-hidden group">
-              <img src={STORE_IMAGES[2]} alt="Store 3" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 object-center" />
+            <div className="store-image h-[250px] md:h-[350px] rounded-sm overflow-hidden group relative">
+              <Image src={STORE_IMAGES[2]} alt="Store 3" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-1000 group-hover:scale-105 object-center" />
             </div>
-            <div className="store-image h-[350px] md:h-[450px] rounded-sm overflow-hidden group">
-              <img src={STORE_IMAGES[3]} alt="Store 4" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 object-center" />
+            <div className="store-image h-[350px] md:h-[450px] rounded-sm overflow-hidden group relative">
+              <Image src={STORE_IMAGES[3]} alt="Store 4" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-1000 group-hover:scale-105 object-center" />
             </div>
           </div>
         </div>

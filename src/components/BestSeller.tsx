@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -126,10 +127,12 @@ export default function BestSeller() {
             className="bestseller-card min-w-[280px] md:min-w-[360px] snap-start group cursor-pointer"
           >
             <div className="relative aspect-[3/4] overflow-hidden mb-6 bg-gray-50">
-              <img 
+              <Image 
                 src={product.image} 
                 alt={product.name} 
-                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 object-top"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover transition-transform duration-1000 group-hover:scale-110 object-top"
               />
               <div className="absolute inset-x-0 bottom-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out bg-gradient-to-t from-black/60 to-transparent">
                 <button className="w-full py-4 bg-white text-black font-semibold tracking-wide flex items-center justify-center gap-2 hover:bg-[var(--luxury-gold)] hover:text-white transition-colors shadow-xl">

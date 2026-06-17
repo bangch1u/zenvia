@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -75,12 +76,15 @@ export default function Lookbook() {
 
         <div className="flex flex-col md:flex-row items-center gap-12 md:gap-24">
           <div className="w-full md:w-1/2 relative h-[60vh] md:h-[80vh] overflow-hidden rounded-none shadow-2xl">
-            <img 
-              ref={img1Ref}
-              src={LOOKBOOK_IMAGE_01} 
-              alt="Lookbook 1" 
-              className="absolute inset-0 w-full h-[120%] object-cover -top-[10%]"
-            />
+            <div ref={img1Ref} className="absolute w-full h-[120%] -top-[10%] left-0">
+              <Image 
+                src={LOOKBOOK_IMAGE_01} 
+                alt="Lookbook 1" 
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
+              />
+            </div>
           </div>
           
           <div className="w-full md:w-1/2 flex flex-col gap-16">
@@ -94,12 +98,15 @@ export default function Lookbook() {
             </div>
 
             <div className="relative h-[40vh] md:h-[50vh] w-4/5 ml-auto overflow-hidden rounded-none shadow-2xl">
-              <img 
-                ref={img2Ref}
-                src={LOOKBOOK_IMAGE_02} 
-                alt="Lookbook 2" 
-                className="absolute inset-0 w-full h-[120%] object-cover -top-[10%]"
-              />
+              <div ref={img2Ref} className="absolute w-full h-[120%] -top-[10%] left-0">
+                <Image 
+                  src={LOOKBOOK_IMAGE_02} 
+                  alt="Lookbook 2" 
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>
